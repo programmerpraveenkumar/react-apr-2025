@@ -1,15 +1,16 @@
 'use client'
 import React, { useRef } from 'react';
 import styles from './style.module.css';
+import { log } from 'console';
 
-const login=()=>{
+const login= ()=>{
     // const svgRef = React.createRef();
 
     let nameRef =  React.createRef<HTMLDivElement>();
     let pwdRef =  React.createRef<HTMLDivElement>();
-    const loginApiCall=()=>{
-            let name =  nameRef.current;
-            let pwd = pwdRef.current;
+    const loginApiCall=async()=>{
+            let name =  nameRef.current.value;
+            let pwd = pwdRef.current.value;
             if(name == ''){
                 alert("name should not be empty")
                 return 
@@ -18,6 +19,25 @@ const login=()=>{
                 alert("pwd should not be empty")
                 return 
             }else{
+                let data = {
+                    "email":name,
+                    "password":pwd
+                    }
+                let res = await fetch("https://www.apirequest.in/user/api/login",
+                    {
+                        "method":"post",
+                        "body":JSON.stringify(data),
+                        "headers":{"content-type":"application/json"}
+                    })
+                   // if(res.status ==200){
+                    if(res.ok){
+                        let json = await res.json();
+                        console.log(json);
+                    }else{
+                        alert("request failure");
+                    }
+               
+                
                 //api call for login validation
             }
             

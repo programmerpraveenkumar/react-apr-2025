@@ -7,6 +7,7 @@ export default function Home() {
   let firstname = "bjjgj";
   let lastname = "lkbjjgj";
   const[name,setName] = useState('abcd');
+  const[userList,setuserList] = useState([]);
   //arrow function
   const myfunction=()=>{
     setName('efgh');
@@ -14,10 +15,11 @@ export default function Home() {
   }
   const getMyApi=async ()=>{
       let res = await fetch("https://www.apirequest.in/user/api/");
-      // console.log(res);
-      let json = await res.json();
+      let json = await res.json();//promise method
       console.log(json);
+      setuserList(json);//update the server response into the state variable
   }
+
   return (
     <div>
       <Header/>
@@ -27,6 +29,16 @@ export default function Home() {
       <h1>{name}</h1>   
       <button onClick={myfunction}>Click me</button>
       <button onClick={getMyApi}>get  My Api</button>
+      {
+        userList.map((user,index)=>{
+            return (
+              <div>
+                <h1 key={index}>{user.name}</h1>
+                <img src={user.img}/>
+                </div>
+            )
+        })
+      }
       <Footer/>
     </div>
   );
