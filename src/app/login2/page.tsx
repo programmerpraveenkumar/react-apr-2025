@@ -1,20 +1,19 @@
 'use client'
-import React, { useRef } from 'react';
-import styles from '@/app/login/style.module.css';
+import React, { useRef, useState } from 'react';
+import styles from './style.module.css';
+import { log } from 'console';
 
-const Login= ()=>{
+const login= ()=>{
     // const svgRef = React.createRef();
 
-    let nameRef =  React.createRef<HTMLDivElement>();
-    let pwdRef =  React.createRef<HTMLDivElement>();
+    const[ name,setName] =  useState<string>();
+    const[ pwd,setPwd]  = useState<string>('');
     const loginApiCall=async()=>{
-            let name =  nameRef.current.value;
-            let pwd = pwdRef.current.value;
-            if(name == ''){
+            if(name == '' || name == undefined){
                 alert("name should not be empty")
                 return 
             }
-           else  if(pwd == ''){
+           else  if(pwd == '' || pwd == undefined){
                 alert("pwd should not be empty")
                 return 
             }else{
@@ -49,10 +48,10 @@ const Login= ()=>{
 
         <h1>Login form</h1>
         <div>
-            <input ref={nameRef} className={styles.my_input} type="text" placeholder="Enter User Name" />
+            <input onChange={(e)=>setName(e.target.value)} className={styles.my_input} type="text" placeholder="Enter User Name" />
         </div>
         <div>
-            <input ref={pwdRef}  className={styles.my_input} type="text" placeholder="Enter User Password" />
+            <input onChange={(e)=>setPwd(e.target.value)}  className={styles.my_input} type="text" placeholder="Enter User Password" />
         </div>
         <div>
             <input onClick={loginApiCall} className={styles.my_input} type="button"  value="click"/>
@@ -63,4 +62,4 @@ const Login= ()=>{
     )
 }
 
-export default Login;
+export default login;
